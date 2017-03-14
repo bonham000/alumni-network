@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import RepoList from './common/RepoList';
-import MessageBox from './common/MessageBox';
-import DividingHeader from './common/DividingHeader';
-import DropdownMultiSelect from './common/DropdownMultiSelect';
-import UserLabel from './common/UserLabel';
-import { saveUser } from '../actions/loginActions';
+import RepoList from '../common/RepoList';
+import MessageBox from '../common/MessageBox';
+import DividingHeader from '../common/DividingHeader';
+import DropdownMultiSelect from '../common/DropdownMultiSelect';
+import UserLabel from '../common/UserLabel';
+import { saveUser } from '../../actions/loginActions';
 
-import { skills, interests } from '../assets/data/dropdownOptions';
+import { skills, interests } from '../../assets/data/dropdownOptions';
 
 class Dashboard extends React.Component {
   state = {
@@ -22,7 +22,6 @@ class Dashboard extends React.Component {
     certs: [],
     mentor: false,
   }
-
   componentDidMount() {
     const { fccCerts } = this.props.user;
     var certs = [];
