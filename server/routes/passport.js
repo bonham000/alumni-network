@@ -1,8 +1,8 @@
 import express from 'express';
 import passport from 'passport';
-import { Strategy as GitHubStrategy } from 'passport-github2'
-import { Strategy as TwitterStrategy } from 'passport-twitter';
-import { Strategy as LinkedInStrategy } from 'passport-linkedin';
+import GitHubStrategy from 'passport-github2'
+import TwitterStrategy from 'passport-twitter';
+import LinkedInStrategy from 'passport-linkedin';
 import { isAuthenticated } from '../routes/user';
 import Session from 'express-session';
 import User from '../models/user';
@@ -34,7 +34,7 @@ passport.use(new GitHubStrategy({
     process.env.GITHUB_PROD_ID : process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.NODE_ENV === 'production' ?
     process.env.GITHUB_PROD_SECRET : process.env.GITHUB_SECRET,
-  callbackURL: `${SERVER_URL}/auth/github/callback`
+  callbackURL: `https://safe-cliffs-78756.herokuapp.com/auth/github/callback`
 }, (accesstoken, refreshToken, profile, done) => {
     User.findOne({ githubId: profile.id }, (err, user) => {
 
