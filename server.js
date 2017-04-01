@@ -4,6 +4,10 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
+const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com';
+export const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
+export const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:8080';
+
 import passportRoute from './server/routes/passport';
 import user from './server/routes/user';
 import community from './server/routes/community';
@@ -12,13 +16,6 @@ import privateChat from './server/routes/private-chat';
 import gitLabRoute from './server/helpers/gitlabRoute';
 
 dotenv.config();
-
-const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com';
-export const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
-export const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:8080';
-
-console.log(CLIENT_URL);
-console.log(SERVER_URL);
 
 // try to initialize redis
 const startRedis = () => {
