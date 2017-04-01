@@ -73,7 +73,7 @@ passport.use(new GitHubStrategy({
 
 router.get('/auth/github', passport.authenticate('github'));
 
-router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: `${CLIENT_URL}/login` }), ((req, res) => {
+router.get(`${SERVER_URL}/auth/github/callback`, passport.authenticate('github', { failureRedirect: `${CLIENT_URL}/login` }), ((req, res) => {
   // successfull authentication from github
   res.redirect(`${CLIENT_URL}/verify_account`);
 }));
