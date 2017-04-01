@@ -9,7 +9,7 @@ import user from './server/routes/user';
 import community from './server/routes/community';
 import chat from './server/routes/chat';
 import privateChat from './server/routes/private-chat';
-import gitLabRoute from './server/helpers/gitLabRoute';
+import gitLabRoute from './server/helpers/gitlabRoute';
 
 dotenv.config();
 
