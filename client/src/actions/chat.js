@@ -2,9 +2,8 @@
 import axios from 'axios';
 import uuidV1 from 'uuid/v1';
 import { Map, Set } from 'immutable';
-import { store } from '../index.js';
+import { store, APP_HOST } from '../index.js';
 import { addFlashMessage } from './flashMessages';
-import { APP_HOST } from '../index';
 
 // setup socket.io connection
 export const socket = require('socket.io-client').connect(`${APP_HOST}/`);
