@@ -13,9 +13,9 @@ import gitLabRoute from './server/helpers/gitlabRoute';
 
 dotenv.config();
 
-const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com/';
-export const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000/';
-export const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:8080/';
+const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com';
+export const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
+export const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:8080';
 
 // try to initialize redis
 const startRedis = () => {

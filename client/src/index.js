@@ -11,7 +11,7 @@ import thunk from 'redux-thunk';
 import './styles/index.css';
 
 const DEV_HOST = 'http://localhost:8080';
-const PROD_HOST = 'https://safe-cliffs-78756.herokuapp.com/';
+const PROD_HOST = 'https://safe-cliffs-78756.herokuapp.com';
 
 export const APP_HOST = PROD_HOST;
 
