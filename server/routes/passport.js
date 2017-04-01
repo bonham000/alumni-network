@@ -30,8 +30,10 @@ passport.deserializeUser(function(user, done) { done(null, user) });
 
 // GITHUB
 passport.use(new GitHubStrategy({
-  clientID: process.env.PROD ? process.env.GITHUB_PROD_ID : process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.PROD ? process.env.GITHUB_PROD_SECRET : process.env.GITHUB_SECRET,
+  clientID: process.env.NODE_ENV === 'production' ?
+    process.env.GITHUB_PROD_ID : process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.NODE_ENV === 'production' ?
+    process.env.GITHUB_PROD_SECRET : process.env.GITHUB_SECRET,
   callbackURL: `${SERVER_URL}/auth/github/callback`
 }, (accesstoken, refreshToken, profile, done) => {
     User.findOne({ githubId: profile.id }, (err, user) => {
