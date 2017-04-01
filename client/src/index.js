@@ -10,6 +10,11 @@ import rootReducer from './rootReducer';
 import thunk from 'redux-thunk';
 import './styles/index.css';
 
+const DEV_HOST = 'http://localhost:8080';
+const PROD_HOST = '...';
+
+export const APP_HOST = PROD_HOST;
+
 export const store = createStore(
   rootReducer,
   composeWithDevTools(

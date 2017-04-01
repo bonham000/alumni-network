@@ -8,6 +8,8 @@ import Session from 'express-session';
 import User from '../models/user';
 import dotenv from 'dotenv';
 
+import { CLIENT_URL, SERVER_URL } from '../../server.js';
+
 dotenv.config();
 
 const router = express.Router();
@@ -28,7 +30,7 @@ passport.deserializeUser(function(user, done) { done(null, user) });
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_SECRET,
-  callbackURL: 'http://localhost:8080/auth/github/callback'
+  callbackURL: `${SERVER_URL}/auth/github/callback`
 }, (accesstoken, refreshToken, profile, done) => {
     User.findOne({ githubId: profile.id }, (err, user) => {
 
@@ -67,16 +69,15 @@ passport.use(new GitHubStrategy({
 
 router.get('/auth/github', passport.authenticate('github'));
 
-router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: 'http://localhost:3000/login' }), ((req, res) => {
+router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: `${CLIENT_URL}/login` }), ((req, res) => {
   // successfull authentication from github
-  res.redirect('http://localhost:3000/verify_account');
+  res.redirect(`${CLIENT_URL}/verify_account`);
 }));
-
 // TWITTER
 passport.use(new TwitterStrategy({
   consumerKey: process.env.TWITTER_KEY,
   consumerSecret: process.env.TWITTER_SECRET,
-  callbackURL: 'http://localhost:8080/connect/twitter/callback'
+  callbackURL: `${SERVER_URL}/connect/twitter/callback`
 }, (token, tokenSecret, profile, done) => {
   return done(null, profile)
 }));
@@ -84,14 +85,14 @@ passport.use(new TwitterStrategy({
 router.get('/connect/twitter', isAuthenticated, passport.authorize('twitter'));
 
 router.get('/connect/twitter/callback',
-  passport.authorize('twitter', { failureRedirect: 'http://localhost:3000/dashboard/profile' }), ((req, res) => {
+  passport.authorize('twitter', { failureRedirect: `${CLIENT_URL}/dashboard/profile` }), ((req, res) => {
     const { user, account } = req;
 
     User.findOne({ githubId: user.githubId }, (err, updatedUser) => {
       if (!err) {
         updatedUser.social.twitter = account.username;
         updatedUser.save();
-        res.redirect('http://localhost:3000/dashboard/profile');
+        res.redirect(`${CLIENT_URL}/dashboard/profile`);
         console.log('updated user with twitter handle');
       } else {
         console.log(err);
@@ -103,7 +104,7 @@ router.get('/connect/twitter/callback',
 passport.use(new LinkedInStrategy({
   consumerKey: process.env.LINKEDIN_KEY,
   consumerSecret: process.env.LINKEDIN_SECRET,
-  callbackURL: 'http://localhost:8080/connect/linkedin/callback'
+  callbackURL: `${SERVER_URL}/connect/linkedin/callback`
 }, (token, tokenSecret, profile, done) => {
   return done(null, profile)
 }));
@@ -111,13 +112,13 @@ passport.use(new LinkedInStrategy({
 router.get('/connect/linkedin', isAuthenticated, passport.authorize('linkedin'));
 
 router.get('/connect/linkedin/callback',
-  passport.authorize('linkedin', { failureRedirect: 'http://localhost:3000/dashboard/profile' }), ((req, res) => {
+  passport.authorize('linkedin', { failureRedirect: `${CLIENT_URL}/dashboard/profile` }), ((req, res) => {
 
     User.findOne({ githubId: req.user.githubId }, (err, updatedUser) => {
       if (!err) {
         updatedUser.social.linkedin = req.account.displayName;
         updatedUser.save();
-        res.redirect('http://localhost:3000/dashboard/profile');
+        res.redirect(`${CLIENT_URL}/dashboard/profile`);
         console.log('updated user with linkedin handle');
       } else {
         console.log(err);
@@ -128,8 +129,7 @@ router.get('/connect/linkedin/callback',
 // logout user & redirect to home page
 router.get('/logout', function(req, res){
   req.logout();
-  res.redirect('http://localhost:3000/');
+  res.redirect(`${CLIENT_URL}/`);
 });
-
 
 export default router;

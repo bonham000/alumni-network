@@ -4,11 +4,10 @@ import uuidV1 from 'uuid/v1';
 import { Map, Set } from 'immutable';
 import { store } from '../index.js';
 import { addFlashMessage } from './flashMessages';
+import { APP_HOST } from '../index';
 
 // setup socket.io connection
-const DEV_HOST = 'http://localhost:8080';
-const PROD_HOST = ''; // production host url
-export const socket = require('socket.io-client').connect(DEV_HOST);
+export const socket = require('socket.io-client').connect(APP_HOST);
 
 export const PRIVATE_ERROR = 'PRIVATE_ERROR';
 export const POPULATE_PRIVATE = 'POPULATE_PRIVATE';

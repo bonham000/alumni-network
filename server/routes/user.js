@@ -9,6 +9,8 @@ import {
   getDataVisCert
 } from '../helpers/getCerts';
 
+import { CLIENT_URL } from '../../server.js';
+
 const router = express.Router();
 
 // authentication middleware using express-session:
@@ -16,7 +18,7 @@ export const isAuthenticated = (req, res, next) => {
   if (req.user) {
     next();
   } else {
-    res.redirect('http://localhost:3000/login');
+    res.redirect(`${CLIENT_URL}/login`);
   }
 }
 
