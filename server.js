@@ -13,23 +13,6 @@ import gitLabRoute from './server/helpers/gitlabRoute';
 
 dotenv.config();
 
-// try to initialize redis
-const startRedis = () => {
-  if (process.env.REDISTOGO_URL) {
-    var rtg = require("url").parse(process.env.REDISTOGO_URL);
-    var client = require("redis").createClient(rtg.port, rtg.hostname);
-    client.auth(rtg.auth.split(":")[1]);
-  } else {
-    var client = require("redis").createClient();
-  }
-  return client;
-}
-
-export const client = startRedis();
-
-client.on('error', (err) => console.log(`Redis Error: ${err}`));
-client.on('ready', () => console.log('Redis connected'));
-
 // initialize mongoDB
 mongoose.Promise = require('bluebird');
 mongoose.connect(process.env.MONGO_URL, () => console.log('Mongoose connected'));
