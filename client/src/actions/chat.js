@@ -7,7 +7,7 @@ import { addFlashMessage } from './flashMessages';
 import { APP_HOST } from '../index';
 
 // setup socket.io connection
-export const socket = require('socket.io-client').connect(${`APP_HOST}/`);
+export const socket = require('socket.io-client').connect(`${APP_HOST}/`);
 
 export const PRIVATE_ERROR = 'PRIVATE_ERROR';
 export const POPULATE_PRIVATE = 'POPULATE_PRIVATE';
