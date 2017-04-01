@@ -17,6 +17,9 @@ const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com';
 export const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
 export const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:8080';
 
+console.log(CLIENT_URL);
+console.log(SERVER_URL);
+
 // try to initialize redis
 const startRedis = () => {
   if (process.env.REDISTOGO_URL) {
