@@ -1,5 +1,5 @@
 import React from 'react';
-import { APP_HOST } from '../../index';
+import { APP_HOST } from '../../actions/chat';
 
 const LoginPage = () => {
   return (

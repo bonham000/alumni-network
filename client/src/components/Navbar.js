@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import sticky from '../assets/helpers/stickyNav';
 import $ from 'jquery';
 
-import { APP_HOST } from '../index.js';
+import { APP_HOST } from '../actions/chat';
 
 // Damn you jQuery! >>
 $('.ui.sticky').sticky();

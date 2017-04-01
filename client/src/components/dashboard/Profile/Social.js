@@ -4,7 +4,7 @@ import MessageBox from '../../common/MessageBox';
 import FormField from '../../common/FormField';
 import Ribbon from './common/RibbonHeader';
 
-import { APP_HOST } from '../../../index';
+import { APP_HOST } from '../../../actions/chat';
 
 const inputOptions = 'small left icon';
 
