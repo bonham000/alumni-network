@@ -14,6 +14,8 @@ dotenv.config();
 
 const router = express.Router();
 
+// we need to use Redis or MongoStore or something
+// for the session here......
 router.use(Session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -28,8 +30,8 @@ passport.deserializeUser(function(user, done) { done(null, user) });
 
 // GITHUB
 passport.use(new GitHubStrategy({
-  clientID: process.env.GITHUB_CLIENT_ID,
-  clientSecret: process.env.GITHUB_SECRET,
+  clientID: process.env.PROD ? process.env.GITHUB_PROD_ID : process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.PROD ? process.env.GITHUB_PROD_SECRET : process.env.GITHUB_SECRET,
   callbackURL: `${SERVER_URL}/auth/github/callback`
 }, (accesstoken, refreshToken, profile, done) => {
     User.findOne({ githubId: profile.id }, (err, user) => {
@@ -75,8 +77,8 @@ router.get('/auth/github/callback', passport.authenticate('github', { failureRed
 }));
 // TWITTER
 passport.use(new TwitterStrategy({
-  consumerKey: process.env.TWITTER_KEY,
-  consumerSecret: process.env.TWITTER_SECRET,
+  consumerKey: process.env.TWITTER_KEY ? process.env.TWITTER_KEY : '',
+  consumerSecret: process.env.TWITTER_SECRET ? process.env.TWITTER_SECRET : '',
   callbackURL: `${SERVER_URL}/connect/twitter/callback`
 }, (token, tokenSecret, profile, done) => {
   return done(null, profile)
@@ -102,8 +104,8 @@ router.get('/connect/twitter/callback',
 
 // LinkedIn
 passport.use(new LinkedInStrategy({
-  consumerKey: process.env.LINKEDIN_KEY,
-  consumerSecret: process.env.LINKEDIN_SECRET,
+  consumerKey: process.env.LINKEDIN_KEY ? process.env.LINKEDIN_KEY : '',
+  consumerSecret: process.env.LINKEDIN_SECRET ? process.env.LINKEDIN_SECRET : '',
   callbackURL: `${SERVER_URL}/connect/linkedin/callback`
 }, (token, tokenSecret, profile, done) => {
   return done(null, profile)

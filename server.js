@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import redis from 'redis';
 import mongoose from 'mongoose';
 
 import passportRoute from './server/routes/passport';
@@ -14,8 +13,24 @@ import gitLabRoute from './server/helpers/gitLabRoute';
 
 dotenv.config();
 
-// initialize redis
-export const client = redis.createClient();
+const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com/';
+export const CLIENT_URL = process.env.PROD ? APP_HOST : 'http://localhost:3000/';
+export const SERVER_URL = process.env.PROD ? APP_HOST : 'http://localhost:8080/';
+
+// try to initialize redis
+const startRedis = () => {
+  if (process.env.REDISTOGO_URL) {
+    var rtg = require("url").parse(process.env.REDISTOGO_URL);
+    var client = require("redis").createClient(rtg.port, rtg.hostname);
+    client.auth(rtg.auth.split(":")[1]);
+  } else {
+    var client = require("redis").createClient();
+  }
+  return client;
+}
+
+export const client = startRedis();
+
 client.on('error', (err) => console.log(`Redis Error: ${err}`));
 client.on('ready', () => console.log('Redis connected'));
 
