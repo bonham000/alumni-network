@@ -3,14 +3,27 @@ import passport from 'passport';
 import GitHubStrategy from 'passport-github2'
 import TwitterStrategy from 'passport-twitter';
 import LinkedInStrategy from 'passport-linkedin';
-import { isAuthenticated } from '../routes/user';
 import Session from 'express-session';
 import User from '../models/user';
 import dotenv from 'dotenv';
 
-import { CLIENT_URL, SERVER_URL } from '../../server.js';
+const APP_HOST = 'https://safe-cliffs-78756.herokuapp.com';
+const CLIENT_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:3000';
+const SERVER_URL = process.env.NODE_ENV === 'production' ? APP_HOST : 'http://localhost:8080';
+
+console.log(CLIENT_URL);
+console.log(SERVER_URL);
 
 dotenv.config();
+
+// authentication middleware using express-session:
+export const isAuthenticated = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect(`${CLIENT_URL}/login`);
+  }
+}
 
 const router = express.Router();
 
@@ -34,7 +47,7 @@ passport.use(new GitHubStrategy({
     process.env.GITHUB_PROD_ID : process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.NODE_ENV === 'production' ?
     process.env.GITHUB_PROD_SECRET : process.env.GITHUB_SECRET,
-  callbackURL: `${CLIENT_URL}/auth/github/callback`
+  callbackURL: `${SERVER_URL}/auth/github/callback`
 }, (accesstoken, refreshToken, profile, done) => {
     User.findOne({ githubId: profile.id }, (err, user) => {
 
