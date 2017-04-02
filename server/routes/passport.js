@@ -23,6 +23,8 @@ export const isAuthenticated = (req, res, next) => {
 
 const router = express.Router();
 
+//asldfhaslfhsalhfalshdfl;as
+
 // we need to use Redis or MongoStore or something
 // for the session here......
 router.use(Session({
