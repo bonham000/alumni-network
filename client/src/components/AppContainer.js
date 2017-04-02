@@ -42,10 +42,6 @@ class AppContainer extends React.Component {
     this.props.clearFlashMessage();
   }
 
-  enter = () => {
-    console.warn('HI!');
-  }
-
   render() {
     const { url } = this.props.match;
     return (
@@ -57,7 +53,7 @@ class AppContainer extends React.Component {
             <Route exact path={`${url}/community`} component={Community}/>
             <Route exact path={`${url}/mentorship`} component={Mentorship}/>
             <Route exact path={`${url}/chat`} component={Chat}/>
-            <Route exact onEnter={this.enter} path={`${url}/chat/:username`} component={Chat}/>
+            <Route exact path={`${url}/chat/:username`} component={Chat}/>
           </div>
         }
       </div>
