@@ -51,6 +51,7 @@ class Profile extends React.Component {
     super(props);
     const { user, viewState } = this.props;
     this.state = {
+      _BIO: '',
       user,
       viewState,
       errors: {},
